@@ -10,7 +10,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-git-branch-disable \
   -docstring 'Disable Git branch option for mode line' %{
-    set-option global modeline-git-branch ''
+    set-option global modeline_git_branch ''
     remove-hooks global modeline-git-branch
   }
   # update
@@ -70,7 +70,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-indent-disable \
   -docstring 'Disable indent option for mode line' %{
-    set-option global modeline-indent ''
+    set-option global modeline_indent ''
     remove-hooks global modeline-indent
   }
   # update
@@ -99,7 +99,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-codepoint-disable \
   -docstring 'Disable codepoint option for mode line' %{
-    set-option global modeline-codepoint ''
+    set-option global modeline_codepoint ''
     remove-hooks global modeline-codepoint
   }
   # update
@@ -107,5 +107,4 @@ provide-module modeline-extras %{
     set-option buffer modeline_codepoint 'U+%sh{printf ''%04x'' "$kak_cursor_char_value"}'
   }
 
-  
 }
