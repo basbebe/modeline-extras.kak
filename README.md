@@ -20,12 +20,14 @@ require-module modeline-extras
 
 ## Usage
 
-This plugins makes the following options available:
+This plugins makes the following options available for 'modelinefmt':
 
 - `modeline_nerdfont`: Enable [Nerd Fonts](https://www.nerdfonts.com/#home) symbols. Default: `false`.
 - `modeline_git_branch`: Shows the current Git branch
 - `modeline_buffer_position`: Shows the current buffer position as a symbol
 - `modeline_indent`: Shows the number of spaces set as indentwidth for the current buffer or a tabstop-symbol.
+- `modeline_lsp_err`: Shows the number of errors by [kak-lsp](https://github.com/kak-lsp/kak-lsp/)
+- `modeline_lsp_warn`: Shows the number of warnings by [kak-lsp](https://github.com/kak-lsp/kak-lsp/)
 - `modeline_codepoint`: Shows the [Unicode](https://en.wikipedia.org/wiki/Unicode) [code point](https://en.wikipedia.org/wiki/Code_point) of the current cursor position
 
 Every option needs to be enabled first with it's corresponding command:
@@ -57,6 +59,8 @@ plug modeline-extras git/modeline-extras.kak %{
   set-option -add global modelinefmt ' %val{cursor_line}:%val{cursor_char_column} %opt{modeline_buffer_position}{default}'
   # Context Info + Mode Info
   set-option -add global modelinefmt ' {{context_info}} {{mode_info}}'
+  # lsp
+  set-option -add global modelinefmt ' {DiagnosticError}%opt{modeline_lsp_err}{DiagnosticWarning}%opt{modeline_lsp_warn}{default}'
   # Filetype + Indentwidth
   set-option -add global modelinefmt ' %opt{filetype} %opt{modeline_indent}'
   # client@session

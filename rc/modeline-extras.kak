@@ -112,4 +112,41 @@ provide-module modeline-extras %{
     set-option buffer modeline_codepoint 'U+%sh{printf ''%04x'' "$kak_cursor_char_value"}'
   }
 
+  # kak-lsp diagnostics
+  # https://github.com/kak-lsp/kak-lsp/
+  define-command modeline-lsp-enable \
+  -docstring 'Enable lsp option for mode line' %{
+    declare-option str modeline_lsp_warn
+    declare-option str modeline_lsp_err
+    hook -group modeline-lsp global BufSetOption lsp_diagnostic_error_count=.* modeline-lsp-update-err
+    hook -group modeline-lsp global BufSetOption lsp_diagnostic_warning_count=.* modeline-lsp-update-warn
+  }
+  # disable
+  define-command modeline-lsp-disable \
+  -docstring 'Disable lsp option for mode line' %{
+    set-option global modeline_lsp_warn ''
+    set-option global modeline_lsp_err ''
+    remove-hooks global modeline-lsp
+  }
+  # update lsp diagnostic error
+  define-command -hidden modeline-lsp-update-err %{
+  set-option buffer modeline_lsp_err %sh{
+    symbol_err='W:'
+    $kak_opt_nerdfont && symbol_err=''
+    if [ $kak_opt_lsp_diagnostic_error_count -gt 0 ]; then
+      printf '%s' "$symbol_err" "$kak_opt_lsp_diagnostic_error_count"
+    fi
+    }
+  }
+  # update lsp diagnostic warning
+  define-command -hidden modeline-lsp-update-warn %{
+  set-option buffer modeline_lsp_warn %sh{
+    symbol_warn='W:'
+    $kak_opt_nerdfont && symbol_warn=''
+    if [ $kak_opt_lsp_diagnostic_warning_count -gt 0 ]; then
+      printf '%s' "$symbol_warn" "$kak_opt_lsp_diagnostic_warning_count"
+    fi
+    }
+  }
+
 }
