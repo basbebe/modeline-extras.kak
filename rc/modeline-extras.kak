@@ -3,29 +3,6 @@ provide-module modeline-extras %{
   # https://www.nerdfonts.com/#home
   declare-option bool modeline_nerdfont false
 
-  # Git branch
-  # enable
-  define-command modeline-git-branch-enable \
-  -docstring 'Enable Git branch option for mode line' %{
-    declare-option str modeline_git_branch
-    hook -group modeline-git-branch global WinDisplay .* modeline-git-branch-update
-  }
-  # disable
-  define-command modeline-git-branch-disable \
-  -docstring 'Disable Git branch option for mode line' %{
-    set-option global modeline_git_branch ''
-    remove-hooks global modeline-git-branch
-  }
-  # update
-  define-command -hidden modeline-git-branch-update %{
-    set-option buffer modeline_git_branch %sh{
-      symbol=''
-      $kak_opt_nerdfont && symbol=' '
-      branch=$(cd "${kak_buffile%/*}" 2>/dev/null && git symbolic-ref --short HEAD 2>/dev/null)
-      [ $branch ] && printf '%s' "$symbol" "$branch"
-    }
-  }
-
   # Position in local buffer as Symbol
   # enable
   define-command modeline-buffer-position-enable \
@@ -65,6 +42,52 @@ provide-module modeline-extras %{
     }
   }
 
+  # Unicode code point
+  # https://en.wikipedia.org/wiki/Unicode
+  # https://en.wikipedia.org/wiki/Code_point
+  # enable
+  define-command modeline-codepoint-enable \
+  -docstring 'Enable codepoint option for mode line' %{
+    declare-option str modeline_codepoint
+    hook -group modeline-codepoint global WinCreate .* %{
+      hook -group modeline-codepoint window NormalIdle .* modeline-codepoint-update
+      hook -group modeline-codepoint window InsertIdle .* modeline-codepoint-update
+    }
+  }
+  # disable
+  define-command modeline-codepoint-disable \
+  -docstring 'Disable codepoint option for mode line' %{
+    set-option global modeline_codepoint ''
+    remove-hooks global modeline-codepoint
+  }
+  # update
+  define-command -hidden modeline-codepoint-update %{
+    set-option window modeline_codepoint 'U+%sh{printf ''%04x'' "$kak_cursor_char_value"}'
+  }
+
+  # Git branch
+  # enable
+  define-command modeline-git-branch-enable \
+  -docstring 'Enable Git branch option for mode line' %{
+    declare-option str modeline_git_branch
+    hook -group modeline-git-branch global WinDisplay .* modeline-git-branch-update
+  }
+  # disable
+  define-command modeline-git-branch-disable \
+  -docstring 'Disable Git branch option for mode line' %{
+    set-option global modeline_git_branch ''
+    remove-hooks global modeline-git-branch
+  }
+  # update
+  define-command -hidden modeline-git-branch-update %{
+    set-option buffer modeline_git_branch %sh{
+      symbol=''
+      $kak_opt_nerdfont && symbol=' '
+      branch=$(cd "${kak_buffile%/*}" 2>/dev/null && git symbolic-ref --short HEAD 2>/dev/null)
+      [ $branch ] && printf '%s' "$symbol" "$branch"
+    }
+  }
+
   # Indentwidth
   # enable
   define-command modeline-indent-enable \
@@ -87,29 +110,6 @@ provide-module modeline-extras %{
         printf '%s␣' $kak_opt_indentwidth
       fi
     }
-  }
-
-  # Unicode code point
-  # https://en.wikipedia.org/wiki/Unicode
-  # https://en.wikipedia.org/wiki/Code_point
-  # enable
-  define-command modeline-codepoint-enable \
-  -docstring 'Enable codepoint option for mode line' %{
-    declare-option str modeline_codepoint
-    hook -group modeline-codepoint global WinCreate .* %{
-      hook -group modeline-codepoint window NormalIdle .* modeline-codepoint-update
-      hook -group modeline-codepoint window InsertIdle .* modeline-codepoint-update
-    }
-  }
-  # disable
-  define-command modeline-codepoint-disable \
-  -docstring 'Disable codepoint option for mode line' %{
-    set-option global modeline_codepoint ''
-    remove-hooks global modeline-codepoint
-  }
-  # update
-  define-command -hidden modeline-codepoint-update %{
-    set-option window modeline_codepoint 'U+%sh{printf ''%04x'' "$kak_cursor_char_value"}'
   }
 
   # kak-lsp diagnostics

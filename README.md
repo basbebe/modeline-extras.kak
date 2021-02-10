@@ -23,20 +23,21 @@ require-module modeline-extras
 This plugins makes the following options available for 'modelinefmt':
 
 - `modeline_nerdfont`: Enable [Nerd Fonts](https://www.nerdfonts.com/#home) symbols. Default: `false`.
-- `modeline_git_branch`: Shows the current Git branch
 - `modeline_buffer_position`: Shows the current buffer position as a symbol
+- `modeline_codepoint`: Shows the [Unicode](https://en.wikipedia.org/wiki/Unicode) [code point](https://en.wikipedia.org/wiki/Code_point) of the current cursor position
+- `modeline_git_branch`: Shows the current Git branch
 - `modeline_indent`: Shows the number of spaces set as indentwidth for the current buffer or a tabstop-symbol.
 - `modeline_lsp_err`: Shows the number of errors by [kak-lsp](https://github.com/kak-lsp/kak-lsp/)
 - `modeline_lsp_warn`: Shows the number of warnings by [kak-lsp](https://github.com/kak-lsp/kak-lsp/)
-- `modeline_codepoint`: Shows the [Unicode](https://en.wikipedia.org/wiki/Unicode) [code point](https://en.wikipedia.org/wiki/Code_point) of the current cursor position
 
 Every option needs to be enabled first with it's corresponding command:
 
 ```sh
-modeline-git-branch-enable
 modeline-buffer-position-enable
-modeline-indent-enable
 modeline-codepoint-enable
+modeline-git-branch-enable
+modeline-indent-enable
+modeline-lsp-enable
 ```
 
 Use [faces](https://github.com/mawww/kakoune/blob/master/doc/pages/faces.asciidoc#faces) or [markup strings](https://github.com/mawww/kakoune/blob/master/doc/pages/faces.asciidoc#markup-strings) to change colors and attributes.
@@ -49,8 +50,8 @@ plug modeline-extras git/modeline-extras.kak %{
   set-option global modeline-nerdfont true
 
   # enable options
-  modeline-git-branch-enable
   modeline-buffer-position-enable
+  modeline-git-branch-enable
   modeline-indent-enable
 
   # Git branch + Filename
