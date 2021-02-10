@@ -70,7 +70,7 @@ provide-module modeline-extras %{
   define-command modeline-indent-enable \
   -docstring 'Enable indent option for mode line' %{
     declare-option str modeline_indent
-    hook -group modeline-indent global BufSetOption indentwidth=.* modeline-indent-update
+    hook -group modeline-indent global WinSetOption indentwidth=.* modeline-indent-update
   }
   # disable
   define-command modeline-indent-disable \
@@ -80,7 +80,7 @@ provide-module modeline-extras %{
   }
   # update
   define-command -hidden modeline-indent-update %{
-    set-option buffer modeline_indent %sh{
+    set-option window modeline_indent %sh{
       if [ $kak_opt_indentwidth -eq 0 ]; then
         printf ' '
       else
@@ -109,7 +109,7 @@ provide-module modeline-extras %{
   }
   # update
   define-command -hidden modeline-codepoint-update %{
-    set-option buffer modeline_codepoint 'U+%sh{printf ''%04x'' "$kak_cursor_char_value"}'
+    set-option window modeline_codepoint 'U+%sh{printf ''%04x'' "$kak_cursor_char_value"}'
   }
 
   # kak-lsp diagnostics
@@ -118,8 +118,8 @@ provide-module modeline-extras %{
   -docstring 'Enable lsp option for mode line' %{
     declare-option str modeline_lsp_warn
     declare-option str modeline_lsp_err
-    hook -group modeline-lsp global BufSetOption lsp_diagnostic_error_count=.* modeline-lsp-update-err
-    hook -group modeline-lsp global BufSetOption lsp_diagnostic_warning_count=.* modeline-lsp-update-warn
+    hook -group modeline-lsp global WinSetOption lsp_diagnostic_error_count=.* modeline-lsp-update-err
+    hook -group modeline-lsp global WinSetOption lsp_diagnostic_warning_count=.* modeline-lsp-update-warn
   }
   # disable
   define-command modeline-lsp-disable \
@@ -130,7 +130,7 @@ provide-module modeline-extras %{
   }
   # update lsp diagnostic error
   define-command -hidden modeline-lsp-update-err %{
-  set-option buffer modeline_lsp_err %sh{
+  set-option window modeline_lsp_err %sh{
     symbol_err='W:'
     $kak_opt_nerdfont && symbol_err=''
     if [ $kak_opt_lsp_diagnostic_error_count -gt 0 ]; then
@@ -140,7 +140,7 @@ provide-module modeline-extras %{
   }
   # update lsp diagnostic warning
   define-command -hidden modeline-lsp-update-warn %{
-  set-option buffer modeline_lsp_warn %sh{
+  set-option window modeline_lsp_warn %sh{
     symbol_warn='W:'
     $kak_opt_nerdfont && symbol_warn=''
     if [ $kak_opt_lsp_diagnostic_warning_count -gt 0 ]; then
