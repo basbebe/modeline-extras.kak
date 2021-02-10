@@ -16,7 +16,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-buffer-position-disable \
   -docstring 'Disable buffer position option for mode line' %{
-    set-option global modeline_buffer_position ''
+    set-option current modeline_buffer_position ''
     remove-hooks global modeline-buffer-position
   }
   # update
@@ -57,7 +57,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-codepoint-disable \
   -docstring 'Disable codepoint option for mode line' %{
-    set-option global modeline_codepoint ''
+    set-option current modeline_codepoint ''
     remove-hooks global modeline-codepoint
   }
   # update
@@ -75,7 +75,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-git-branch-disable \
   -docstring 'Disable Git branch option for mode line' %{
-    set-option global modeline_git_branch ''
+    set-option current modeline_git_branch ''
     remove-hooks global modeline-git-branch
   }
   # update
@@ -98,7 +98,7 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-indent-disable \
   -docstring 'Disable indent option for mode line' %{
-    set-option global modeline_indent ''
+    set-option current modeline_indent ''
     remove-hooks global modeline-indent
   }
   # update
@@ -124,13 +124,13 @@ provide-module modeline-extras %{
   # disable
   define-command modeline-lsp-disable \
   -docstring 'Disable lsp option for mode line' %{
-    set-option global modeline_lsp_warn ''
-    set-option global modeline_lsp_err ''
+    set-option current modeline_lsp_warn ''
+    set-option current modeline_lsp_err ''
     remove-hooks global modeline-lsp
   }
   # update lsp diagnostic error
   define-command -hidden modeline-lsp-update-err %{
-  set-option window modeline_lsp_err %sh{
+  set-option buffer modeline_lsp_err %sh{
     symbol_err='W:'
     $kak_opt_nerdfont && symbol_err=''
     if [ $kak_opt_lsp_diagnostic_error_count -gt 0 ]; then
@@ -140,7 +140,7 @@ provide-module modeline-extras %{
   }
   # update lsp diagnostic warning
   define-command -hidden modeline-lsp-update-warn %{
-  set-option window modeline_lsp_warn %sh{
+  set-option buffer modeline_lsp_warn %sh{
     symbol_warn='W:'
     $kak_opt_nerdfont && symbol_warn=''
     if [ $kak_opt_lsp_diagnostic_warning_count -gt 0 ]; then
