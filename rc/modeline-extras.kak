@@ -1,4 +1,7 @@
 provide-module modeline-extras %{
+  # Nerd Fonts
+  # https://www.nerdfonts.com/#home
+  declare-option bool modeline_nerdfont false
 
   # Git branch
   # enable
@@ -16,8 +19,10 @@ provide-module modeline-extras %{
   # update
   define-command -hidden modeline-git-branch-update %{
     set-option buffer modeline_git_branch %sh{
+      symbol=''
+      $kak_opt_nerdfont && symbol=' '
       branch=$(cd "${kak_buffile%/*}" 2>/dev/null && git symbolic-ref --short HEAD 2>/dev/null)
-      [ $branch ] && printf ' %s' $branch
+      [ $branch ] && printf '%s' "$symbol" "$branch"
     }
   }
 

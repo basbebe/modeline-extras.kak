@@ -22,10 +22,11 @@ require-module modeline-extras
 
 This plugins makes the following options available:
 
-- `modeline_git_branch`: shows the current Git branch
-- `modeline_buffer_position`: shows the current buffer position as a symbol
-- `modeline_indent`: shows the number of spaces set as indentwidth for the current buffer or a tabstop-symbol.
-- `modeline_codepoint`: shows the [Unicode](https://en.wikipedia.org/wiki/Unicode) [code point](https://en.wikipedia.org/wiki/Code_point) of the current cursor position
+- `modeline_nerdfont`: Enable [Nerd Fonts](https://www.nerdfonts.com/#home) symbols. Default: `false`.
+- `modeline_git_branch`: Shows the current Git branch
+- `modeline_buffer_position`: Shows the current buffer position as a symbol
+- `modeline_indent`: Shows the number of spaces set as indentwidth for the current buffer or a tabstop-symbol.
+- `modeline_codepoint`: Shows the [Unicode](https://en.wikipedia.org/wiki/Unicode) [code point](https://en.wikipedia.org/wiki/Code_point) of the current cursor position
 
 Every option needs to be enabled first with it's corresponding command:
 
@@ -42,6 +43,10 @@ Use [faces](https://github.com/mawww/kakoune/blob/master/doc/pages/faces.asciido
 
 ```sh
 plug modeline-extras git/modeline-extras.kak %{
+  # enable Nerd Font symbols
+  set-option global modeline-nerdfont true
+
+  # enable options
   modeline-git-branch-enable
   modeline-buffer-position-enable
   modeline-indent-enable
