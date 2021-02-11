@@ -20,7 +20,7 @@ require-module modeline-extras
 
 ## Usage
 
-This plugins makes the following options available for 'modelinefmt':
+This plugins makes the following options available for `modelinefmt`:
 
 - `modeline_nerdfont`: Enable [Nerd Fonts](https://www.nerdfonts.com/#home) symbols. Default: `false`.
 - `modeline_buffer_position`: Shows the current buffer position as a symbol
@@ -53,6 +53,7 @@ plug modeline-extras git/modeline-extras.kak %{
   modeline-buffer-position-enable
   modeline-git-branch-enable
   modeline-indent-enable
+  modeline-lsp-enable
 
   # Git branch + Filename
   set-option global modelinefmt '{magenta+i}%opt{modeline_git_branch} {bright-blue+u}%val{bufname}{default}'
@@ -68,6 +69,8 @@ plug modeline-extras git/modeline-extras.kak %{
   set-option -add global modelinefmt ' {bright-cyan}%val{client}{bright-cyan+b}%val{session}'
 }
 ```
+
+![preview](https://user-images.githubusercontent.com/7083188/107636049-fc933500-6c63-11eb-9a92-19ddfbd0c0dd.png)
 
 ## Similar projects
 
